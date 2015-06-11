@@ -7,7 +7,7 @@ import random
 # Lower  = slower
 # Higher = less precise
 rate=.2
-
+activation=0
 # Create random weights
 inWeight=[1, 1, .5]
 #inWeight=[random.uniform(0, 1), random.uniform(0, 1), .5]
@@ -23,7 +23,7 @@ test+=[[1.0, 1.0, 1.0]]
 
 # Calculate response from neural input
 def outNeuron(midThresh):
-        global inNeuron, inWeight
+        global inNeuron, inWeight, activation
         # compute the activation and return the output
         # activation funtion is a step function
         activation=inNeuron[0]*inWeight[0] + inNeuron[1]*inWeight[1]
@@ -34,11 +34,11 @@ def outNeuron(midThresh):
 
 # Display results of test
 def display(out, real):
-    global inNeuron, inWeight
-    if out == real:
-        print("[",str(inNeuron[0])," ",str(inNeuron[1]) ,"]",str(out),"should be", str(real),"true")
-    else:
-        print("[",str(inNeuron[0])," ",str(inNeuron[1]) ,"]",str(out),"should be", str(real),"")
+    global inNeuron, inWeight, activation
+    #if out == real:
+    print("[",str(inNeuron[0])," ",str(inNeuron[1]) ,"]",str(out),"should be", str(activation),"true")
+    #else:
+    #    print("[",str(inNeuron[0])," ",str(inNeuron[1]) ,"]",str(out),"should be", str(real),"")
 
 while 1:
         # Loop through each lesson in the learning table
@@ -55,8 +55,8 @@ while 1:
                 display(out, test[i][2])
                 # Adjust weight of neuron #2
                 # based on feedback, then display
-                out = outNeuron(2)
+                #out = outNeuron(2)
                 #inWeight[1]+=rate*(test[i][2]-out)
-                display(out, test[i][2])
+                #display(out, test[i][2])
                 # Delay
                 time.sleep(1)
