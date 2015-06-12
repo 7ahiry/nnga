@@ -2,6 +2,7 @@
 
 import time
 import random
+import math
 
 # individuals
 def individual(length, min, max):
@@ -89,7 +90,6 @@ i_max = 1.1
 p = population(p_count, i_length, i_min, i_max)
 
 # Neural networks
-rate=.2
 activation=0
 # Create random weights
 inWeight=[random.uniform(0, 1), random.uniform(0, 1), .99]
@@ -104,15 +104,16 @@ def outNeuron():
         # compute the activation and return the output
         # activation funtion is a step function
         activation=inNeuron[0]*inWeight[0] + inNeuron[1]*inWeight[1]
-        if activation<inWeight[2]:
-                return 1.0
+        if activation>inWeight[2]:
+            return (1/(1+math.exp(-activation)))
+            #return 1.0
         else:
-                return 0.0
+            return 0.0
 
 # Display results of test
 def display(out, real):
     global inNeuron, inWeight, activation,p
-    print("[ %2.2f %2.2f ] - %1.1f - [ %2.2f %2.2f ] -- W = [ %2.2f %2.2f ] p_length %i [ %2.2f %2.2f ]/[ %2.2f %2.2f ]" % (inNeuron[0],inNeuron[1], out,real[0],real[1],inWeight[0],inWeight[1],len(p), p[0][0],p[0][1],p[9][0],p[9][1] ))
+    print("[ %2.2f %2.2f ] - %1.1f/%1.1f - [ %2.2f %2.2f ] -- W = [ %2.2f %2.2f ] p_length %i [ %2.2f %2.2f ]/[ %2.2f %2.2f ]" % (inNeuron[0],inNeuron[1], out,round(out),real[0],real[1],inWeight[0],inWeight[1],len(p), p[0][0],p[0][1],p[9][0],p[9][1] ))
 
 while 1:
         # Loop through each lesson in the learning table
